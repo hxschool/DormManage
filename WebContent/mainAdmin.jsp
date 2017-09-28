@@ -27,7 +27,7 @@
 	});
 </script>
 <style type="text/css">
-	  .bs-docs-sidenav {
+.bs-docs-sidenav {
     background-color: #fff;
     border-radius: 6px;
     box-shadow: 0 1px 4px rgba(0, 0, 0, 0.067);
@@ -61,26 +61,32 @@
     margin-top: 2px;
     opacity: 0.25;
 }
-.bs-docs-sidenav > li > a:hover {
-    background-color: #f5f5f5;
-}
-.bs-docs-sidenav a:hover .icon-chevron-right {
-    opacity: 0.5;
-}
-.bs-docs-sidenav .active .icon-chevron-right, .bs-docs-sidenav .active a:hover .icon-chevron-right {
-    background-image: url("../img/glyphicons-halflings-white.png");
-    opacity: 1;
-}
+
+#main {padding:0;margin:0;} #main .container-fluid{padding:0 4px 0 6px;}
+		#header {margin:0 0 8px;position:static;bgcolor:#000;} 
+		#header .brand {bgcolor:#000;font-family:Helvetica, Georgia, Arial, sans-serif, 黑体;padding-left:33px;}
+		#footer {margin:8px 0 0 0;padding:3px 0 0 0;font-size:11px;text-align:center;border-top:2px solid #0663A2;}
+		#footer, #footer a {color:#999;}
 </style>
 
 </head>
-<body>
-<div class="container-fluid" style="padding-right: 0px;padding-left: 0px;">
-	<div region="north" style="height: 100px;background-image: url('images/bg.jpg')">
-		<div align="left" style="width: 80%;height:100px ;float: left;padding-top: 40px;padding-left: 30px;" ><font color="white" size="6" >宿舍管理系统</font></div>
-		<div style="padding-top: 70px;padding-right: 20px;">当前用户：&nbsp;<font color="red" >${currentUser.userName }</font></div>
+<body id="main">
+
+
+	<div id="header" class="navbar navbar-fixed-top ">
+		<div class="navbar-inner">
+			
+			<div class="brand"><span id="productName">哈尔滨信息工程学院</span></div>
+			<ol id="userControl" class="nav pull-right">
+
+				<li id="userInfo"><a class="dropdown-toggle"
+					data-toggle="dropdown" href="#" title="个人信息">您好,${currentUser.userName }</a>
+					
+			</ol>
+		</div>
 	</div>
-</div>
+
+
 	<div class="container-fluid">
 		<div class="row-fluid">
 			<div class="span2 bs-docs-sidebar" >

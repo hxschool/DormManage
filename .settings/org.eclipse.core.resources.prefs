@@ -4,3 +4,4 @@ encoding//src/com/lero=GBK
 encoding//src/com/lero/web/DormManagerServlet.java=gbk
 encoding//src/org/jasig/cas/client/filter/AutoSetUserAdapterFilter.java=GBK
 encoding/<project>=GBK
+encoding/db_dorm.sql=UTF-8
