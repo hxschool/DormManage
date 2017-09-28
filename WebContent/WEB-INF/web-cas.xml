@@ -1,0 +1,196 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd" id="WebApp_ID" version="2.5">
+  <display-name>DormManage</display-name>
+  <welcome-file-list>
+    <welcome-file>login.jsp</welcome-file>
+  </welcome-file-list>
+  
+  
+  <!-- ****************** 单点登录开始 ********************-->
+	<!-- 用于实现单点登出功能  可选 -->
+	<listener>
+		<listener-class>org.jasig.cas.client.session.SingleSignOutHttpSessionListener</listener-class>
+	</listener>
+
+	<!-- 该过滤器用于实现单点登出功能，单点退出配置，一定要放在其他filter之前 可选 -->
+	<filter>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<filter-class>org.jasig.cas.client.session.SingleSignOutFilter</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>http://localhost:8080/cas/</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Single Sign Out Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 该过滤器负责用户的认证工作，必须 -->
+	<filter>
+		<filter-name>CASFilter</filter-name>
+		<filter-class>org.jasig.cas.client.authentication.AuthenticationFilter</filter-class>
+		<init-param>
+			<!--casServerLoginUrl:cas服务的登陆url -->
+			<param-name>casServerLoginUrl</param-name>
+			<param-value>http://localhost:8080/cas/login</param-value>
+		</init-param>
+		<init-param>
+		    <!--serverName:本项目的ip+port -->
+			<param-name>serverName</param-name>
+			<param-value>http://localhost:8080</param-value>
+		</init-param>
+		<init-param>
+			<param-name>useSession</param-name>
+			<param-value>true</param-value>
+		</init-param>
+		<init-param>
+			<param-name>redirectAfterValidation</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CASFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 该过滤器负责对Ticket的校验工作，必须-->
+	<filter>
+		<filter-name>CAS Validation Filter</filter-name>
+		<filter-class>
+			org.jasig.cas.client.validation.Cas20ProxyReceivingTicketValidationFilter
+		</filter-class>
+		<init-param>
+			<param-name>casServerUrlPrefix</param-name>
+			<param-value>http://localhost:8080/cas/</param-value>
+		</init-param>
+		<init-param>
+			<param-name>serverName</param-name>
+			<param-value>http://localhost:8080</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Validation Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 该过滤器对HttpServletRequest请求包装， 可通过HttpServletRequest的getRemoteUser()方法获得登录用户的登录名，可选 -->
+
+	<filter>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<filter-class>
+			org.jasig.cas.client.util.HttpServletRequestWrapperFilter
+		</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS HttpServletRequest Wrapper Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+
+	<!-- 该过滤器使得可以通过org.jasig.cas.client.util.AssertionHolder来获取用户的登录名。
+		 比如AssertionHolder.getAssertion().getPrincipal().getName()。 
+		 这个类把Assertion信息放在ThreadLocal变量中，这样应用程序不在web层也能够获取到当前登录信息 -->
+	<filter>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<filter-class>org.jasig.cas.client.util.AssertionThreadLocalFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>CAS Assertion Thread Local Filter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	
+	<filter>
+		<filter-name>AutoSetUserAdapterFilter</filter-name>
+		<filter-class>org.jasig.cas.client.filter.AutoSetUserAdapterFilter</filter-class>
+	</filter>
+	<filter-mapping>
+		<filter-name>AutoSetUserAdapterFilter</filter-name>
+		<url-pattern>*</url-pattern>
+	</filter-mapping> 
+	
+	<!-- ****************** 单点登录结束 ********************-->
+  
+  
+  <filter>
+  	<filter-name>loginFilter</filter-name>
+  	<filter-class>com.lero.filter.LoginFilter</filter-class>
+  </filter>
+  
+  <filter-mapping>
+  	<filter-name>loginFilter</filter-name>
+  	<url-pattern>/*</url-pattern>
+  </filter-mapping>
+  
+  <servlet>
+  	<servlet-name>loginServlet</servlet-name>
+  	<servlet-class>com.lero.web.LoginServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>loginServlet</servlet-name>
+  	<url-pattern>/login</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>blankServlet</servlet-name>
+  	<servlet-class>com.lero.web.BlankServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>blankServlet</servlet-name>
+  	<url-pattern>/blank</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>dormBuildServlet</servlet-name>
+  	<servlet-class>com.lero.web.DormBuildServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>dormBuildServlet</servlet-name>
+  	<url-pattern>/dormBuild</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>dormManagerServlet</servlet-name>
+  	<servlet-class>com.lero.web.DormManagerServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>dormManagerServlet</servlet-name>
+  	<url-pattern>/dormManager</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>studentServlet</servlet-name>
+  	<servlet-class>com.lero.web.StudentServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>studentServlet</servlet-name>
+  	<url-pattern>/student</url-pattern>
+  </servlet-mapping>
+  
+  <servlet>
+  	<servlet-name>recordServlet</servlet-name>
+  	<servlet-class>com.lero.web.RecordServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>recordServlet</servlet-name>
+  	<url-pattern>/record</url-pattern>
+  </servlet-mapping>
+  
+   <servlet>
+  	<servlet-name>passwordServlet</servlet-name>
+  	<servlet-class>com.lero.web.PasswordServlet</servlet-class>
+  </servlet>
+  
+  <servlet-mapping>
+  	<servlet-name>passwordServlet</servlet-name>
+  	<url-pattern>/password</url-pattern>
+  </servlet-mapping>
+  
+  
+  
+</web-app>

@@ -45,18 +45,19 @@ window.onload = function(){
 		<form name="myForm" class="form-search" method="post" action="record?action=search" style="padding-bottom: 0px">
 				<span class="data_search">
 					<span class="controls input-append date form_date" style="margin-right: 10px" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                    	<input id="startDate" name="startDate" style="width:120px;height: 30px;" placeholder="起始日期" type="text" value="${startDate }" readonly >
+                    	<input id="startDate" name="startDate" style="width:120px;height: 29px;" placeholder="起始日期" type="text" value="${startDate }" readonly >
                     	<span class="add-on"><i class="icon-remove"></i></span>
 						<span class="add-on"><i class="icon-th"></i></span>
                		</span>
 					<span class="controls input-append date form_date" style="margin-right: 10px" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                    	<input id="endDate" name="endDate" style="width:120px;height: 30px;" placeholder="终止日期" type="text" value="${endDate }" readonly>
+                    	<input id="endDate" name="endDate" style="width:120px;height: 29px;" placeholder="终止日期" type="text" value="${endDate }" readonly>
                     	<span class="add-on"><i class="icon-remove"></i></span>
 						<span class="add-on"><i class="icon-th"></i></span>
                		</span>
 					&nbsp;<button type="submit" class="btn btn-info" onkeydown="if(event.keyCode==13) myForm.submit()">搜索</button>
 				</span>
 		</form>
+		
 		<div>
 			<table class="table table-striped table-bordered table-hover datatable">
 				<thead>

@@ -52,12 +52,12 @@ window.onload = function(){
 				<button class="btn btn-success" type="button" style="margin-right: 50px;" onclick="javascript:window.location='record?action=preSave'">添加</button>
 				<span class="data_search">
 					<span class="controls input-append date form_date" style="margin-right: 10px" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                    	<input id="startDate" name="startDate" style="width:120px;height: 30px;" placeholder="起始日期" type="text" value="${startDate }" readonly >
+                    	<input id="startDate" name="startDate" style="width:120px;height: 29px;" placeholder="起始日期" type="text" value="${startDate }" readonly >
                     	<span class="add-on"><i class="icon-remove"></i></span>
 						<span class="add-on"><i class="icon-th"></i></span>
                		</span>
 					<span class="controls input-append date form_date" style="margin-right: 10px" data-date="" data-date-format="yyyy-mm-dd" data-link-format="yyyy-mm-dd">
-                    	<input id="endDate" name="endDate" style="width:120px;height: 30px;" placeholder="终止日期" type="text" value="${endDate }" readonly>
+                    	<input id="endDate" name="endDate" style="width:120px;height: 29px;" placeholder="终止日期" type="text" value="${endDate }" readonly>
                     	<span class="add-on"><i class="icon-remove"></i></span>
 						<span class="add-on"><i class="icon-th"></i></span>
                		</span>
