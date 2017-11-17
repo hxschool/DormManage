@@ -1,6 +1,7 @@
 eclipse.preferences.version=1
 encoding//WebContent/test.jsp=UTF-8
 encoding//src/com/lero=GBK
+encoding//src/com/lero/util/HttpClientUtil.java=GBK
 encoding//src/com/lero/web/DormManagerServlet.java=gbk
 encoding//src/org/jasig/cas/client/filter/AutoSetUserAdapterFilter.java=GBK
 encoding/<project>=GBK

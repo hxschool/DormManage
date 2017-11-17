@@ -34,6 +34,17 @@ public class DormBuildDao {
 		return dormBuildList;
 	}
 	
+	public static int dormDormBuildId(Connection con, String dormBuildName)throws Exception {
+		String sql = "select dormBuildId from t_dormBuild where dormBuildName=?";
+		PreparedStatement pstmt = con.prepareStatement(sql);
+		pstmt.setString(1, dormBuildName);
+		ResultSet rs = pstmt.executeQuery();
+		if(rs.next()) {
+			return rs.getInt("dormBuildId");
+		}
+		return 0;
+	}
+	
 	public static String dormBuildName(Connection con, int dormBuildId)throws Exception {
 		String sql = "select * from t_dormBuild where dormBuildId=?";
 		PreparedStatement pstmt = con.prepareStatement(sql);

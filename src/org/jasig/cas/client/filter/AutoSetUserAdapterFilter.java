@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.Connection;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 import javax.servlet.Filter;
@@ -20,6 +21,9 @@ import javax.servlet.http.HttpSession;
 import org.jasig.cas.client.authentication.AttributePrincipal;
 import org.jasig.cas.client.validation.Assertion;
 
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+import com.lero.dao.DormBuildDao;
 import com.lero.dao.DormManagerDao;
 import com.lero.dao.StudentDao;
 import com.lero.dao.UserDao;
@@ -27,8 +31,10 @@ import com.lero.model.Admin;
 import com.lero.model.DormManager;
 import com.lero.model.Student;
 import com.lero.util.DbUtil;
+import com.lero.util.HttpClientUtil;
 import com.lero.util.IdcardInfoExtractor;
 import com.lero.util.PropertiesUtil;
+import com.lero.util.StringUtil;
 
 public class AutoSetUserAdapterFilter implements Filter {
 
@@ -96,9 +102,24 @@ public class AutoSetUserAdapterFilter implements Filter {
 						Student student = new Student(username, password);
 						Student currentStudent = userDao.Login(con, student);
 						if(currentStudent==null){
-							student.setDormBuildId(0);
-							student.setDormBuildName("");
-							student.setDormName("");
+							String url = PropertiesUtil.getValue("api.url");
+							url = url.concat("getDorm?studentNumber=").concat(no);
+							
+							String retVal = HttpClientUtil.get(url);
+							Map<String,String> map = new Gson().fromJson(retVal, new TypeToken<Map<String, String>>() {  }.getType());
+							if (map != null && map.size() > 0) {
+								String json = map.get("result");
+								if(!StringUtil.isEmpty(json)){
+									Map<String,String> studentMap = new Gson().fromJson(json, new TypeToken<Map<String, String>>() {  }.getType());
+									
+									String dormbuildName = studentMap.get("dormbuild_name");
+									student.setDormBuildId(DormBuildDao.dormDormBuildId(dbUtil.getCon(),dormbuildName));
+									student.setDormBuildName(dormbuildName);
+									student.setDormName(studentMap.get("dorm_number"));
+									
+								}
+							}
+	
 							student.setName(name);
 							student.setSex(sex);
 							student.setStuNumber(no);

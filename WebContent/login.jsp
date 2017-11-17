@@ -152,7 +152,7 @@
         &nbsp;&nbsp;&nbsp;&nbsp;
         <button class="btn btn-large btn-primary" type="button" >重置</button>
 
-		<p align="center" style="padding-top: 15px;">版权所有  2014</p>
+		<p align="center" style="padding-top: 15px;">版权所有  2017</p>
       </form>
 </div>
 </body>
